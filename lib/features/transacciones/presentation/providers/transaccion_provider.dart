@@ -51,7 +51,11 @@ class TransaccionProvider extends ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
-      _transacciones = await _getTransacciones(token: token);
+      final resultado = await _getTransacciones(token: token);
+
+      // Re-instanciamos la lista para evitar conflictos de Genéricos
+      _transacciones = List<Transaccion>.from(resultado);
+
       notifyListeners();
     } catch (e) {
       _errorMessage = e.toString().replaceFirst('Exception: ', '');
@@ -100,6 +104,7 @@ class TransaccionProvider extends ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
+      // 1. Enviamos los datos al backend para actualizar la base de datos
       await _updateTransaccion(
         token: token,
         id: id,
@@ -107,14 +112,21 @@ class TransaccionProvider extends ChangeNotifier {
         categoria: categoria,
         descripcion: descripcion,
       );
+
+      // 2. Buscamos la transacción en nuestra lista local
       final index = _transacciones.indexWhere((t) => t.id == id);
       if (index != -1) {
-        _transacciones[index] = _transacciones[index].copyWith(
-          monto: monto,
-          categoria: categoria,
-          descripcion: descripcion,
+        final vieja = _transacciones[index];
+
+        // 3. 🚨 Actualizamos la UI fusionando la vieja transacción directamente
+        // con las variables (monto, categoria, descripcion) que tecleaste en la vista
+        _transacciones[index] = vieja.copyWith(
+          monto: monto ?? vieja.monto,
+          categoria: categoria ?? vieja.categoria,
+          descripcion: descripcion ?? vieja.descripcion,
         );
       }
+
       notifyListeners();
       return true;
     } catch (e) {

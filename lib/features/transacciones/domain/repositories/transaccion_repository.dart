@@ -13,7 +13,8 @@ abstract class TransaccionRepository {
     String? descripcion,
   });
 
-  Future<void> update({
+  // 🚨 CAMBIO: De void a Future<Transaccion>
+  Future<Transaccion> update({
     required String token,
     required int id,
     double? monto,

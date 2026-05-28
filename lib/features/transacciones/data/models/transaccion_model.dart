@@ -1,6 +1,5 @@
 import '../../domain/entities/transaccion.dart';
 
-/// Model de datos — extiende la Entity Transaccion y agrega serialización.
 class TransaccionModel extends Transaccion {
   const TransaccionModel({
     required super.id,
@@ -13,12 +12,14 @@ class TransaccionModel extends Transaccion {
 
   factory TransaccionModel.fromJson(Map<String, dynamic> json) {
     return TransaccionModel(
-      id: json['id'] as int,
-      tipo: json['tipo'] as String,
-      monto: (json['monto'] as num).toDouble(),
-      categoria: json['categoria'] as String,
+      id: json['id'] as int? ?? json['_id'] as int? ?? 0,
+      tipo: json['tipo'] as String? ?? 'egreso',
+      monto: (json['monto'] as num?)?.toDouble() ?? 0.0,
+      categoria: json['categoria'] as String? ?? 'Otro',
       descripcion: json['descripcion'] as String?,
-      fecha: DateTime.parse(json['fecha'] as String),
+      fecha: json['fecha'] != null
+          ? DateTime.parse(json['fecha'] as String)
+          : DateTime.now(),
     );
   }
 

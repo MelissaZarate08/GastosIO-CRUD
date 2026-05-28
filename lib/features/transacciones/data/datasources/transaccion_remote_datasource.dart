@@ -60,8 +60,7 @@ class TransaccionRemoteDataSource {
         'Error al crear transacción (${response.statusCode})');
   }
 
-  /// PUT /api/transacciones/{id}
-  Future<void> update({
+  Future<TransaccionModel> update({
     required String token,
     required int id,
     double? monto,
@@ -80,7 +79,10 @@ class TransaccionRemoteDataSource {
       token: token,
     );
 
-    if (response.statusCode == 200) return;
+    // 🚨 CAMBIO: Ahora mapeamos el JSON de respuesta tal como en 'create'
+    if (response.statusCode == 200) {
+      return TransaccionModel.fromJson(jsonDecode(response.body));
+    }
 
     final errorBody = jsonDecode(response.body);
     throw Exception(errorBody['detail'] ??

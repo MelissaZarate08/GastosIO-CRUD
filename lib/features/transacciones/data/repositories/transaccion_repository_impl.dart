@@ -31,8 +31,9 @@ class TransaccionRepositoryImpl implements TransaccionRepository {
     );
   }
 
+
   @override
-  Future<void> update({
+  Future<Transaccion> update({
     required String token,
     required int id,
     double? monto,

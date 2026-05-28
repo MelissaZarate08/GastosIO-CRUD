@@ -1,3 +1,4 @@
+import '../entities/transaccion.dart';
 import '../repositories/transaccion_repository.dart';
 
 /// Caso de uso: actualizar una transacción existente.
@@ -6,7 +7,7 @@ class UpdateTransaccion {
 
   UpdateTransaccion(this._repository);
 
-  Future<void> call({
+  Future<Transaccion> call({
     required String token,
     required int id,
     double? monto,
