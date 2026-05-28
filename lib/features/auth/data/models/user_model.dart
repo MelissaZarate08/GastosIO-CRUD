@@ -1,7 +1,5 @@
 import '../../domain/entities/user.dart';
 
-/// Model de datos — extiende la Entity y agrega serialización JSON.
-/// Vive en la capa de datos, no en el dominio.
 class UserModel extends User {
   const UserModel({
     required super.id,

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 
-/// LoginView — solo UI.
-/// Delega toda acción al AuthProvider via context.read().
-/// context.watch() solo para los estados que reconstruyen la UI.
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -28,7 +25,6 @@ class _LoginViewState extends State<LoginView> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    // context.read() para acciones — NO reconstruye el widget
     final success = await context.read<AuthProvider>().login(
       email: _emailCtrl.text.trim(),
       password: _passwordCtrl.text,
@@ -46,7 +42,6 @@ class _LoginViewState extends State<LoginView> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    // context.watch() para estados que deben reconstruir la UI
     final isLoading = context.watch<AuthProvider>().isLoading;
     final errorMessage = context.watch<AuthProvider>().errorMessage;
 
@@ -70,7 +65,7 @@ class _LoginViewState extends State<LoginView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // ── Header ───────────────────────────────────────────────
+
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
@@ -106,7 +101,6 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   const SizedBox(height: 40),
 
-                  // ── Card del formulario ───────────────────────────────────
                   Card(
                     elevation: 0,
                     color: colorScheme.surface,
@@ -129,7 +123,6 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             const SizedBox(height: 24),
 
-                            // Error message
                             if (errorMessage != null) ...[
                               Container(
                                 padding: const EdgeInsets.all(12),
@@ -156,7 +149,6 @@ class _LoginViewState extends State<LoginView> {
                               const SizedBox(height: 16),
                             ],
 
-                            // Email
                             TextFormField(
                               controller: _emailCtrl,
                               keyboardType: TextInputType.emailAddress,
@@ -181,7 +173,6 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Password
                             TextFormField(
                               controller: _passwordCtrl,
                               obscureText: _obscurePassword,
@@ -210,7 +201,6 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             const SizedBox(height: 24),
 
-                            // Botón principal
                             FilledButton(
                               onPressed: isLoading ? null : _submit,
                               style: FilledButton.styleFrom(
@@ -237,7 +227,6 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Ir a registro
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

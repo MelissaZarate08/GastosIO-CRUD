@@ -2,9 +2,6 @@ import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 
-/// Implementación concreta del AuthRepository.
-/// Conecta el dominio con la fuente de datos.
-/// El dominio solo conoce la interfaz abstracta, nunca esta clase.
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _dataSource;
 

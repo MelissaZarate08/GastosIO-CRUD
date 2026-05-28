@@ -3,15 +3,12 @@ import 'package:crudflutter/core/constants/api_constants.dart';
 import 'package:crudflutter/core/http/http_client.dart';
 import '../models/transaccion_model.dart';
 
-/// DataSource remoto de transacciones.
-/// Responsabilidad única: hablar con la API y retornar Models.
 class TransaccionRemoteDataSource {
   final HttpClient _httpClient;
 
   TransaccionRemoteDataSource({required HttpClient httpClient})
       : _httpClient = httpClient;
 
-  /// GET /api/transacciones
   Future<List<TransaccionModel>> getAll({required String token}) async {
     final response = await _httpClient.get(
       ApiConstants.transacciones,
@@ -30,7 +27,6 @@ class TransaccionRemoteDataSource {
         'Error al cargar transacciones (${response.statusCode})');
   }
 
-  /// POST /api/transacciones
   Future<TransaccionModel> create({
     required String token,
     required String tipo,
@@ -79,7 +75,6 @@ class TransaccionRemoteDataSource {
       token: token,
     );
 
-    // 🚨 CAMBIO: Ahora mapeamos el JSON de respuesta tal como en 'create'
     if (response.statusCode == 200) {
       return TransaccionModel.fromJson(jsonDecode(response.body));
     }
@@ -89,7 +84,6 @@ class TransaccionRemoteDataSource {
         'Error al actualizar (${response.statusCode})');
   }
 
-  /// DELETE /api/transacciones/{id}
   Future<void> delete({required String token, required int id}) async {
     final response = await _httpClient.delete(
       ApiConstants.transaccionById(id),

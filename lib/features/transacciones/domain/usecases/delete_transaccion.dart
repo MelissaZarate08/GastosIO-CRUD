@@ -1,6 +1,5 @@
 import '../repositories/transaccion_repository.dart';
 
-/// Caso de uso: eliminar una transacción.
 class DeleteTransaccion {
   final TransaccionRepository _repository;
 

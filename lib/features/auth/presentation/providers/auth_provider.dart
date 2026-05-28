@@ -4,9 +4,6 @@ import '../../domain/entities/user.dart';
 import '../../domain/usecases/login_user.dart';
 import '../../domain/usecases/register_user.dart';
 
-/// AuthProvider — capa de presentación.
-/// Gestiona el estado de autenticación usando Provider (ChangeNotifier).
-/// Solo conoce los UseCases del dominio, nunca el DataSource ni el Repository.
 class AuthProvider extends ChangeNotifier {
   final RegisterUser _registerUser;
   final LoginUser _loginUser;
@@ -21,13 +18,10 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
 
-  // ── Getters públicos ─────────────────────────────────────────────────────
   User? get currentUser => _currentUser;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   bool get isAuthenticated => _currentUser != null;
-
-  // ── Acciones ─────────────────────────────────────────────────────────────
 
   Future<bool> register({
     required String nombre,
@@ -94,7 +88,6 @@ class AuthProvider extends ChangeNotifier {
 
   void clearError() => _clearError();
 
-  // ── Helpers privados ─────────────────────────────────────────────────────
   void _setLoading(bool value) {
     _isLoading = value;
     notifyListeners();

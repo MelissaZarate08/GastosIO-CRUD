@@ -3,12 +3,11 @@ import 'package:flutter/foundation.dart';
 class ApiConstants {
   ApiConstants._();
 
-  // IP pública de tu instancia EC2
-  static const String _ec2Host = '32.196.151.130:8000'; // ← cambia por tu IP real completa
+  static const String _ec2Host = '32.196.151.130:8000';
 
   static String get _host {
-    if (kIsWeb) return 'localhost:8000';       // desarrollo web local
-    return _ec2Host;                            // emulador Android + producción
+    if (kIsWeb) return 'localhost:8000';
+    return _ec2Host;
   }
 
   static String get baseUrl => 'http://$_host';

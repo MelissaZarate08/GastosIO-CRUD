@@ -5,9 +5,6 @@ import '../../domain/usecases/create_transaccion.dart';
 import '../../domain/usecases/update_transaccion.dart';
 import '../../domain/usecases/delete_transaccion.dart';
 
-/// TransaccionProvider — capa de presentación.
-/// Solo conoce los UseCases; nunca habla directamente con datasources.
-/// Cada cambio de estado llama a notifyListeners() para reactividad.
 class TransaccionProvider extends ChangeNotifier {
   final GetTransacciones _getTransacciones;
   final CreateTransaccion _createTransaccion;
@@ -19,7 +16,8 @@ class TransaccionProvider extends ChangeNotifier {
     required CreateTransaccion createTransaccion,
     required UpdateTransaccion updateTransaccion,
     required DeleteTransaccion deleteTransaccion,
-  })  : _getTransacciones = getTransacciones,
+  })
+      : _getTransacciones = getTransacciones,
         _createTransaccion = createTransaccion,
         _updateTransaccion = updateTransaccion,
         _deleteTransaccion = deleteTransaccion;
@@ -28,24 +26,25 @@ class TransaccionProvider extends ChangeNotifier {
   bool _isLoading = false;
   String? _errorMessage;
 
-  // ── Getters públicos ─────────────────────────────────────────────────────
   List<Transaccion> get transacciones => List.unmodifiable(_transacciones);
+
   bool get isLoading => _isLoading;
+
   String? get errorMessage => _errorMessage;
 
-  /// Balance calculado dinámicamente en la capa de presentación.
-  double get balance => _transacciones.fold(
-      0.0, (sum, t) => t.esIngreso ? sum + t.monto : sum - t.monto);
+  double get balance =>
+      _transacciones.fold(
+          0.0, (sum, t) => t.esIngreso ? sum + t.monto : sum - t.monto);
 
-  double get totalIngresos => _transacciones
-      .where((t) => t.esIngreso)
-      .fold(0.0, (sum, t) => sum + t.monto);
+  double get totalIngresos =>
+      _transacciones
+          .where((t) => t.esIngreso)
+          .fold(0.0, (sum, t) => sum + t.monto);
 
-  double get totalEgresos => _transacciones
-      .where((t) => t.esEgreso)
-      .fold(0.0, (sum, t) => sum + t.monto);
-
-  // ── CRUD ─────────────────────────────────────────────────────────────────
+  double get totalEgresos =>
+      _transacciones
+          .where((t) => t.esEgreso)
+          .fold(0.0, (sum, t) => sum + t.monto);
 
   Future<void> fetchAll({required String token}) async {
     _setLoading(true);
@@ -53,7 +52,6 @@ class TransaccionProvider extends ChangeNotifier {
     try {
       final resultado = await _getTransacciones(token: token);
 
-      // Re-instanciamos la lista para evitar conflictos de Genéricos
       _transacciones = List<Transaccion>.from(resultado);
 
       notifyListeners();
@@ -104,7 +102,7 @@ class TransaccionProvider extends ChangeNotifier {
     _setLoading(true);
     _clearError();
     try {
-      // 1. Enviamos los datos al backend para actualizar la base de datos
+
       await _updateTransaccion(
         token: token,
         id: id,
@@ -113,13 +111,10 @@ class TransaccionProvider extends ChangeNotifier {
         descripcion: descripcion,
       );
 
-      // 2. Buscamos la transacción en nuestra lista local
       final index = _transacciones.indexWhere((t) => t.id == id);
       if (index != -1) {
         final vieja = _transacciones[index];
 
-        // 3. 🚨 Actualizamos la UI fusionando la vieja transacción directamente
-        // con las variables (monto, categoria, descripcion) que tecleaste en la vista
         _transacciones[index] = vieja.copyWith(
           monto: monto ?? vieja.monto,
           categoria: categoria ?? vieja.categoria,

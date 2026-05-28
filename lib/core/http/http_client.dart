@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-/// Cliente HTTP centralizado.
-/// Inyección manual: se pasa como dependencia al service, nunca se importa directo en la vista.
 class HttpClient {
   final http.Client _client;
 

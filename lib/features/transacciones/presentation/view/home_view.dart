@@ -6,8 +6,6 @@ import '../../domain/entities/transaccion.dart';
 import '../providers/transaccion_provider.dart';
 import 'transaction_form_view.dart';
 
-/// HomeView — pantalla principal con CustomScrollView.
-/// Usa context.watch() para suscribirse a cambios reactivos del ViewModel.
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -22,15 +20,12 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    // Carga inicial — se ejecuta después del primer frame para tener el context disponible
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
   }
 
-  // Modifica esta sección en tu código:
   Future<void> _loadData() async {
     final token = context.read<AuthProvider>().currentUser?.token;
     if (token != null) {
-      // Si fetchAll es asíncrona, es una buena práctica ponerle await
       await context.read<TransaccionProvider>().fetchAll(token: token);
     }
   }
@@ -87,7 +82,6 @@ class _HomeViewState extends State<HomeView> {
         onRefresh: _loadData,
         child: CustomScrollView(
           slivers: [
-            // ── SliverAppBar ────────────────────────────────────────────────
             SliverAppBar(
               expandedHeight: 280,
               floating: false,
@@ -117,7 +111,6 @@ class _HomeViewState extends State<HomeView> {
               ),
             ),
 
-            // ── Error banner ────────────────────────────────────────────────
             if (txVM.errorMessage != null)
               SliverToBoxAdapter(
                 child: Container(
@@ -141,7 +134,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
 
-            // ── Loading indicator ───────────────────────────────────────────
             if (txVM.isLoading)
               const SliverToBoxAdapter(
                 child: Padding(
@@ -150,7 +142,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
 
-            // ── Header lista ────────────────────────────────────────────────
             if (!txVM.isLoading)
               SliverToBoxAdapter(
                 child: Padding(
@@ -175,7 +166,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
 
-            // ── Lista vacía ─────────────────────────────────────────────────
             if (!txVM.isLoading && txVM.transacciones.isEmpty)
               SliverFillRemaining(
                 child: Center(
@@ -204,7 +194,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
 
-            // ── ListView de transacciones ───────────────────────────────────
             if (!txVM.isLoading && txVM.transacciones.isNotEmpty)
               SliverList(
                 delegate: SliverChildBuilderDelegate(
@@ -221,7 +210,6 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ),
 
-            // Padding inferior para el FAB
             const SliverToBoxAdapter(child: SizedBox(height: 80)),
           ],
         ),
@@ -235,7 +223,6 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-// ── Widget: tarjeta de balance ─────────────────────────────────────────────
 class _BalanceCard extends StatelessWidget {
   final String userName;
   final double balance;
@@ -295,7 +282,7 @@ class _BalanceCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              // Fila resumen ingresos/egresos
+
               Row(
                 children: [
                   Expanded(
@@ -376,7 +363,6 @@ class _SummaryChip extends StatelessWidget {
   }
 }
 
-// ── Widget: tile de transacción ───────────────────────────────────────────
 class _TransaccionTile extends StatelessWidget {
   final Transaccion transaccion;
   final NumberFormat currencyFormat;

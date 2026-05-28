@@ -3,9 +3,6 @@ import 'package:crudflutter/core/constants/api_constants.dart';
 import 'package:crudflutter/core/http/http_client.dart';
 import '../models/user_model.dart';
 
-/// DataSource de autenticación.
-/// Responsabilidad única: hablar con la API REST y retornar Models.
-/// No conoce nada de dominio ni de presentación.
 class AuthRemoteDataSource {
   final HttpClient _httpClient;
 

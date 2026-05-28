@@ -1,7 +1,6 @@
 import '../entities/user.dart';
 import '../repositories/auth_repository.dart';
 
-/// Caso de uso: autenticar al usuario.
 class LoginUser {
   final AuthRepository _repository;
 

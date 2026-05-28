@@ -1,8 +1,6 @@
-/// Entity pura del dominio — representa una transacción financiera.
-/// No conoce JSON, HTTP ni Flutter.
 class Transaccion {
   final int id;
-  final String tipo; // 'ingreso' | 'egreso'
+  final String tipo;
   final double monto;
   final String categoria;
   final String? descripcion;
@@ -17,7 +15,6 @@ class Transaccion {
     required this.fecha,
   });
 
-  // ── Reglas de negocio del dominio ─────────────────────────────────────
   bool get esIngreso => tipo == 'ingreso';
   bool get esEgreso => tipo == 'egreso';
   bool get montoValido => monto > 0;

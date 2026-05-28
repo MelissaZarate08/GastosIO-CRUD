@@ -1,7 +1,6 @@
 import '../entities/transaccion.dart';
 import '../repositories/transaccion_repository.dart';
 
-/// Caso de uso: actualizar una transacción existente.
 class UpdateTransaccion {
   final TransaccionRepository _repository;
 

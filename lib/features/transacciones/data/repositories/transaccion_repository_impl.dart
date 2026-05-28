@@ -2,7 +2,6 @@ import '../../domain/entities/transaccion.dart';
 import '../../domain/repositories/transaccion_repository.dart';
 import '../datasources/transaccion_remote_datasource.dart';
 
-/// Implementación concreta del TransaccionRepository.
 class TransaccionRepositoryImpl implements TransaccionRepository {
   final TransaccionRemoteDataSource _dataSource;
 

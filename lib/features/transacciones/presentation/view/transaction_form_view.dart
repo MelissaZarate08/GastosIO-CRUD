@@ -4,8 +4,6 @@ import '../../../auth/presentation/providers/auth_provider.dart';
 import '../../domain/entities/transaccion.dart';
 import '../providers/transaccion_provider.dart';
 
-/// TransactionFormView — formulario para crear o editar una transacción.
-/// Si recibe [transaccion] es modo edición; si es null, es modo creación.
 class TransactionFormView extends StatefulWidget {
   final Transaccion? transaccion;
 
@@ -124,7 +122,6 @@ class _TransactionFormViewState extends State<TransactionFormView> {
                 const SizedBox(height: 16),
               ],
 
-              // ── Tipo (Ingreso / Egreso) ───────────────────────────────────
               Text('Tipo de movimiento',
                   style: textTheme.labelLarge?.copyWith(
                       color: colorScheme.onSurfaceVariant)),
@@ -144,12 +141,11 @@ class _TransactionFormViewState extends State<TransactionFormView> {
                 ],
                 selected: {_tipo},
                 onSelectionChanged: _isEditing
-                    ? null // No se puede cambiar el tipo al editar
+                    ? null
                     : (value) => setState(() => _tipo = value.first),
               ),
               const SizedBox(height: 24),
 
-              // ── Monto ────────────────────────────────────────────────────
               TextFormField(
                 controller: _montoCtrl,
                 keyboardType:
@@ -174,7 +170,6 @@ class _TransactionFormViewState extends State<TransactionFormView> {
               ),
               const SizedBox(height: 16),
 
-              // ── Categoría ────────────────────────────────────────────────
               DropdownButtonFormField<String>(
                 value: _categoria,
                 decoration: InputDecoration(
@@ -192,7 +187,6 @@ class _TransactionFormViewState extends State<TransactionFormView> {
               ),
               const SizedBox(height: 16),
 
-              // ── Descripción (opcional) ───────────────────────────────────
               TextFormField(
                 controller: _descripcionCtrl,
                 maxLines: 2,
@@ -207,7 +201,6 @@ class _TransactionFormViewState extends State<TransactionFormView> {
               ),
               const SizedBox(height: 32),
 
-              // ── Botón guardar ────────────────────────────────────────────
               FilledButton.icon(
                 onPressed: isLoading ? null : _submit,
                 icon: isLoading

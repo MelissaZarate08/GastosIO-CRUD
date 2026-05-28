@@ -1,5 +1,3 @@
-/// Entity pura del dominio.
-/// No conoce JSON, API ni Flutter — solo representa el concepto de Usuario.
 class User {
   final int id;
   final String nombre;
@@ -13,6 +11,5 @@ class User {
     required this.token,
   });
 
-  /// Regla de negocio del dominio
   bool get isValidEmail => email.contains('@');
 }

@@ -1,7 +1,5 @@
 import '../entities/transaccion.dart';
 
-/// Contrato abstracto del repositorio de transacciones.
-/// Define QUÉ operaciones existen; la implementación define el CÓMO.
 abstract class TransaccionRepository {
   Future<List<Transaccion>> getAll({required String token});
 
@@ -13,7 +11,6 @@ abstract class TransaccionRepository {
     String? descripcion,
   });
 
-  // 🚨 CAMBIO: De void a Future<Transaccion>
   Future<Transaccion> update({
     required String token,
     required int id,

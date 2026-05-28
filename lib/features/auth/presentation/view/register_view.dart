@@ -113,7 +113,6 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                   const SizedBox(height: 32),
 
-                  // ── Card del formulario ─────────────────────────────────
                   Card(
                     elevation: 0,
                     color: colorScheme.surface.withOpacity(0.85),
@@ -128,7 +127,7 @@ class _RegisterViewState extends State<RegisterView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            // Error
+
                             if (errorMessage != null) ...[
                               Container(
                                 padding: const EdgeInsets.all(12),
@@ -155,7 +154,6 @@ class _RegisterViewState extends State<RegisterView> {
                               const SizedBox(height: 16),
                             ],
 
-                            // Nombre
                             TextFormField(
                               controller: _nombreCtrl,
                               textCapitalization: TextCapitalization.words,
@@ -177,7 +175,6 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Email
                             TextFormField(
                               controller: _emailCtrl,
                               keyboardType: TextInputType.emailAddress,
@@ -202,7 +199,6 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Password
                             TextFormField(
                               controller: _passwordCtrl,
                               obscureText: _obscurePassword,
@@ -234,7 +230,6 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             const SizedBox(height: 16),
 
-                            // Confirm password
                             TextFormField(
                               controller: _confirmCtrl,
                               obscureText: _obscureConfirm,
@@ -263,7 +258,6 @@ class _RegisterViewState extends State<RegisterView> {
                             ),
                             const SizedBox(height: 28),
 
-                            // Botón
                             FilledButton(
                               onPressed: isLoading ? null : _submit,
                               style: FilledButton.styleFrom(

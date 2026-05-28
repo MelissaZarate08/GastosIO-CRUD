@@ -1,7 +1,6 @@
 import '../entities/transaccion.dart';
 import '../repositories/transaccion_repository.dart';
 
-/// Caso de uso: obtener todas las transacciones del usuario.
 class GetTransacciones {
   final TransaccionRepository _repository;
 
